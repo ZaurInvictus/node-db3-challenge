@@ -4,6 +4,8 @@ const Schemes = require('./scheme-model.js');
 
 const router = express.Router();
 
+
+
 router.get('/', async (req, res) => {
   try {
     const schemes = await Schemes.find();
@@ -12,6 +14,8 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to get schemes' });
   }
 });
+
+
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -29,6 +33,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
+
 router.get('/:id/steps', async (req, res) => {
   const { id } = req.params;
 
@@ -45,6 +51,8 @@ router.get('/:id/steps', async (req, res) => {
   }
 });
 
+
+
 router.post('/', async (req, res) => {
   const schemeData = req.body;
 
@@ -55,6 +63,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to create new scheme' });
   }
 });
+
 
 
 router.post('/:id/steps', async (req, res) => {
@@ -75,6 +84,8 @@ router.post('/:id/steps', async (req, res) => {
   }
 });
 
+
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -93,6 +104,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
@@ -108,5 +121,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Failed to delete scheme' });
   }
 });
+
 
 module.exports = router;
