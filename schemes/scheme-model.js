@@ -5,25 +5,20 @@ module.exports = {
   findById,
   findSteps,
   add,
+  update,
+  remove
 }
+
 
 function find() {
   return db('schemes')
 }
 
+
 function findById(id) {
-  return db('schemes').where({ id })
+  return db('schemes').where({ id }).first() // call first() to get rid of array
 }
 
-[ 
-  {
-    id: 17, 
-    step_number: 1, 
-    instructions: 'quest',
-    scheme_name: 'Find the Holy Grail'
-  }
-]
-//This array should include the scheme_name not the scheme_id.
 
 function findSteps(id) {
   return db('steps as s') // Primary Table
@@ -33,6 +28,30 @@ function findSteps(id) {
 }
 
 
-function add(schemeData) {
-  return db('schemes').insert(schemeData)
+// Resolves to the newly inserted scheme, including id.
+function add(scheme) {
+  return db('schemes')
+  .insert(scheme)
+  .then(ids => {
+    return findById(ids[0]) // returns posted new scheme
+  })
 }
+
+
+// Resolves to the newly updated scheme object.
+function update(changes, id) {
+  return db('schemes')
+    .where({ id })
+    .update(changes)
+    .then(count => {
+      return findById(id)
+    })
+}
+
+
+function remove(id) {
+  return db('schemes')
+    .where({ id })
+    .del()
+}
+
