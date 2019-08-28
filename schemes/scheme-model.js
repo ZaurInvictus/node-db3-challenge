@@ -6,7 +6,8 @@ module.exports = {
   findSteps,
   add,
   update,
-  remove
+  remove,
+  addStep
 }
 
 
@@ -48,10 +49,27 @@ function update(changes, id) {
     })
 }
 
-// Doesn't return deleted scheme
-function remove(id) {
-  return db('schemes')
+
+
+// Returns count 
+// function remove(id) {
+//   return db('schemes')
+//     .where({ id })
+//     .del()
+// }
+
+// Returns deleted scheme
+async function remove(id) {
+  const scheme = await findById(id);
+  const count = await db('schemes')
     .where({ id })
-    .del()
+    .del();
+  return count >= 1 ? scheme : null;
+}
+
+
+function addStep(stepData, scheme_id) {
+  const step = {...stepData, scheme_id};
+  return db('steps').insert(step);
 }
 
