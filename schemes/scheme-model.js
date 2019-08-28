@@ -48,7 +48,7 @@ function update(changes, id) {
     })
 }
 
-
+// Doesn't return deleted scheme
 function remove(id) {
   return db('schemes')
     .where({ id })

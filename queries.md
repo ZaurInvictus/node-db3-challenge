@@ -15,11 +15,13 @@ where OrderDate < '1997-01-09'
 
 ### Display all ProductNames and Quantities placed on order 10251. Sort by ProductName. Shows 3 records.
 
-// SHOWS ONLY ONE RECORD
-SELECT ProductName, COUNT(*) as count FROM products
-JOIN Orders
-ON Orders.OrderID = 10251
-ORDER BY ProductName
+SELECT ProductName, Quantity
+FROM Products AS p
+inner JOIN OrderDetails AS o
+ON p.ProductID = o.ProductID
+WHERE o.OrderID = 10251
+GROUP BY ProductName
+
 
 ### Display the OrderID, CustomerName and the employee's LastName for every order. All columns should be labeled clearly. Displays 196 records.
 
